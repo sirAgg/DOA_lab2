@@ -47,13 +47,18 @@ void binsert_sort(T* arr, int size)
 {
     for(int i = 1; i < size; i++)
     {
-        T* target_pos = bin_search(arr,)
+        T tmp = arr[i];
+        T* target_pos = bin_search(arr,i,tmp);
+        memmove(target_pos+1, target_pos, (arr+size-target_pos)*sizeof(T));
+        // for(T* j = arr+i; j != target_pos; j--)
+        //     *j = *(j-1);
+        *target_pos = tmp;
     }
 }
 
 
 template <typename T,void (*func)(T*, int)>
-T* merge_sort_internal(T* arr, int size, int k, T* work_arr)
+T* __merge_sort_internal(T* arr, int size, int k, T* work_arr)
 {
     if( size < k )
     {
@@ -65,8 +70,8 @@ T* merge_sort_internal(T* arr, int size, int k, T* work_arr)
         int left_size = size/2;
         int right_size = size-left_size;
 
-        T* left = merge_sort_internal<T,func>( arr, left_size, k, work_arr);
-        T* right = merge_sort_internal<T,func>( arr+left_size, right_size, k, work_arr+left_size);
+        T* left = __merge_sort_internal<T,func>( arr, left_size, k, work_arr);
+        T* right = __merge_sort_internal<T,func>( arr+left_size, right_size, k, work_arr+left_size);
 
         T* target_arr = (left == arr) ? work_arr : arr;
         int left_idx = 0, right_idx = 0, idx = 0;
@@ -92,7 +97,7 @@ void merge_sort(T* arr, int size, int k)
 {
     T* work_arr = new T[size];
 
-    T* ret = merge_sort_internal<T, func>(arr, size, k, work_arr);
+    T* ret = __merge_sort_internal<T, func>(arr, size, k, work_arr);
 
     if (ret == work_arr)
     {

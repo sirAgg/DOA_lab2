@@ -31,20 +31,42 @@ int main(int argc, char *argv[])
 
     int test_size = 100000;
     int seed = 42;
-    // int* arr = new int[test_size];
+    int k_value = 50;
+    int* arr = new int[test_size];
 
-    // randomize_arr(arr,test_size, seed);
-    // {
-    //     Timer t("A-sort");
-    //     merge_sort<int,insert_sort>(arr,test_size,4);
-    // }
-    // if(is_sorted(arr, test_size)) std::cout << "Is sorted\n";
-    // else std::cout << "Not sorted\n";
-    //
+    randomize_arr(arr,test_size, seed);
+    {
+        Timer t("binsert-sort");
+        binsert_sort(arr,test_size);
+    }
+    if(is_sorted(arr, test_size)) std::cout << "Is sorted\n";
+    else std::cout << "Not sorted\n";
 
-    int arr[] = {1,2,4,7,8};
+    randomize_arr(arr,test_size, seed);
+    {
+        Timer t("insert-sort");
+        insert_sort(arr,test_size);
+    }
+    if(is_sorted(arr, test_size)) std::cout << "Is sorted\n";
+    else std::cout << "Not sorted\n";
 
-    std::cout << bin_search(arr,sizeof(arr)/sizeof(*arr),4) - arr << std::endl;
+    randomize_arr(arr,test_size, seed);
+    {
+        Timer t("A-sort");
+        merge_sort<int,insert_sort>(arr,test_size,k_value);
+    }
+    if(is_sorted(arr, test_size)) std::cout << "Is sorted\n";
+    else std::cout << "Not sorted\n";
+
+    randomize_arr(arr,test_size, seed);
+    {
+        Timer t("B-sort");
+        merge_sort<int,binsert_sort>(arr,test_size,k_value);
+    }
+    if(is_sorted(arr, test_size)) std::cout << "Is sorted\n";
+    else std::cout << "Not sorted\n";
+    // int arr[] = {1,2,4,7,8};
+    // std::cout << bin_search(arr,sizeof(arr)/sizeof(*arr),4) - arr << std::endl;
 
 
     return 0;
