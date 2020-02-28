@@ -25,6 +25,25 @@ bool is_sorted(int* arr, int size)
     return true;
 }
 
+
+void test_k_values( void (*func)(int*, int, int), int test_size, int seed )
+{
+    int* arr = new int[test_size];
+
+    for(int k = 10; k < 200; k+=5)
+    {
+
+        randomize_arr(arr,test_size, seed);
+        {
+            std::string s = std::to_string(k);
+            Timer t(s.c_str());
+            binsert_sort(arr,test_size);
+        }
+    }
+    delete[] arr;
+}
+
+
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
@@ -68,6 +87,8 @@ int main(int argc, char *argv[])
     // int arr[] = {1,2,4,7,8};
     // std::cout << bin_search(arr,sizeof(arr)/sizeof(*arr),4) - arr << std::endl;
 
+    test_k_values(merge_sort<int,insert_sort>,1000000, time(NULL));
 
+    delete[] arr;
     return 0;
 }

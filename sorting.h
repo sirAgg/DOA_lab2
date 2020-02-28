@@ -15,16 +15,12 @@ void insert_sort(T* arr, int size)
         for (i = current_idx-1; i >= 0; i--)
         {
             if ( arr[i] < current_elem )
-            {
                 break;
-            }
+
             else
-            {
                 arr[i+1] = arr[i];
-            }
         }
         arr[i+1] = current_elem;
-
     }
 }
 
@@ -60,7 +56,7 @@ void binsert_sort(T* arr, int size)
 template <typename T,void (*func)(T*, int)>
 T* __merge_sort_internal(T* arr, int size, int k, T* work_arr)
 {
-    if( size < k )
+    if( size <= k )
     {
         func(arr,size);
         return arr;
