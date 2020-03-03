@@ -46,8 +46,6 @@ void binsert_sort(T* arr, int size)
         T tmp = arr[i];
         T* target_pos = bin_search(arr,i,tmp);
         memmove(target_pos+1, target_pos, (arr+size-target_pos)*sizeof(T));
-        // for(T* j = arr+i; j != target_pos; j--)
-        //     *j = *(j-1);
         *target_pos = tmp;
     }
 }
